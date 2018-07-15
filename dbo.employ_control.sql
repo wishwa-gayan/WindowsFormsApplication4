@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[employ_control] (
     [emp_numbe]    VARCHAR (50)  NOT NULL,
-    [emp_numbe]      VARCHAR (50)  NOT NULL,
+    [initial]      VARCHAR (50)  NOT NULL,
     [emp_name]     VARCHAR (150) NOT NULL,
     [sex]          VARCHAR (50)  NOT NULL,
     [D_C_B]        NCHAR (10)    NOT NULL,

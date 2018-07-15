@@ -1184,16 +1184,32 @@ namespace WindowsFormsApplication4
 
         private void dssebtn_Click(object sender, EventArgs e)
         {
-            string Query1 = "select * from ds;";
             string MyConnection21 = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\wishwa\\Documents\\mainfuntionsdb.mdf;Integrated Security=True;Connect Timeout=30";
-            SqlConnection mycon1 = new SqlConnection(@MyConnection21);
-            SqlCommand sqcmnd1 = new SqlCommand(Query1, mycon1);
-            SqlDataReader dr1;
-            SqlDataAdapter MyAdapter = new SqlDataAdapter();
-            MyAdapter.SelectCommand = sqcmnd1;
-            DataTable dTable = new DataTable();
-            MyAdapter.Fill(dTable);
-            bunifuCustomDataGrid5.DataSource = dTable;
+            SqlConnection MyConn2 = new SqlConnection(@MyConnection21);
+
+            MyConn2.Open();
+            SqlCommand check_User_Name = new SqlCommand("SELECT COUNT(*) FROM ds  WHERE Emp_Number='" + this.dsstxt.Text.Trim() + "';", MyConn2);
+            check_User_Name.Parameters.AddWithValue("number", number.Text);
+
+            int UserExist = (int)check_User_Name.ExecuteScalar();
+            MyConn2.Close();
+            if (UserExist > 0)
+            {
+
+                string Query1 = "select * from ds WHERE  Emp_Number ='" + dsstxt.Text.Trim() + "';";
+                SqlConnection mycon1 = new SqlConnection(@MyConnection21);
+                SqlCommand sqcmnd1 = new SqlCommand(Query1, mycon1);
+                SqlDataReader dr1;
+                SqlDataAdapter MyAdapter = new SqlDataAdapter();
+                MyAdapter.SelectCommand = sqcmnd1;
+                DataTable dTable = new DataTable();
+                MyAdapter.Fill(dTable);
+                bunifuCustomDataGrid5.DataSource = dTable;
+            }
+            else
+            {
+                MessageBox.Show("Item Not Found");
+            }
         }
     }
 
